@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "node --loader ts-node/esm --watch src/server.ts",
-    "build": "tsc && tsc --project netlify/tsconfig.json",
+    "build": "tsc",
+    "build:functions": "tsc --project netlify/tsconfig.json",
     "start": "node dist/server.js",
     "netlify": "netlify dev"
   },
