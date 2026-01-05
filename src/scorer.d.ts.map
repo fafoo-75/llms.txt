@@ -1,0 +1,1 @@
+{"version":3,"file":"scorer.d.ts","sourceRoot":"","sources":["scorer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAgB,MAAM,YAAY,CAAC;AAExD,qBAAa,UAAU;IACrB,KAAK,CAAC,IAAI,EAAE,YAAY,GAAG,MAAM;IAUjC,OAAO,CAAC,cAAc;IAkCtB,OAAO,CAAC,cAAc;IAsBtB,OAAO,CAAC,cAAc;IA8BtB,UAAU,CAAC,KAAK,EAAE,YAAY,EAAE,GAAG,YAAY,EAAE;CAMlD"}
