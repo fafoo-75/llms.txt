@@ -24,8 +24,8 @@ export const handler: Handler = async (event: HandlerEvent) => {
     }
 
     const crawlerOptions: CrawlerOptions = {
-      maxPages: maxPages || 50,
-      maxDepth: maxDepth || 3,
+      maxPages: maxPages || 20,
+      maxDepth: maxDepth || 2,
       followExternal: false,
     };
 
