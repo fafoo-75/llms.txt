@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node --loader ts-node/esm --watch src/server.ts",
     "build": "tsc",
-    "build:functions": "tsc --project netlify/tsconfig.json && mkdir -p dist/functions && cp .netlify-build/netlify/functions/generate.js dist/functions/ && cp -r .netlify-build/src dist/functions/",
+    "build:functions": "tsc --project netlify/tsconfig.json && mkdir -p dist/functions && cp .netlify-build/netlify/functions/generate.js dist/functions/ && cp -r .netlify-build/src dist/",
     "start": "node dist/server.js",
     "netlify": "netlify dev"
   },

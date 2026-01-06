@@ -1,1 +1,0 @@
-{"version":3,"file":"categorizer.d.ts","sourceRoot":"","sources":["categorizer.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,EAAE,YAAY,EAAE,MAAM,YAAY,CAAC;AAExD,qBAAa,eAAe;IAC1B,UAAU,CAAC,IAAI,EAAE,YAAY,GAAG,YAAY;IA6D5C,OAAO,CAAC,cAAc;IAItB,cAAc,CAAC,IAAI,EAAE,YAAY,GAAG,YAAY;IAOhD,eAAe,CAAC,KAAK,EAAE,YAAY,EAAE,GAAG,YAAY,EAAE;CAGvD"}
