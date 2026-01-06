@@ -17,33 +17,54 @@ export class WebCrawler {
   }
 
   async crawl(): Promise<PageMetadata[]> {
-    await this.crawlPage(this.url, 0);
+    const maxPages = this.options.maxPages || 50;
+    const maxDepth = this.options.maxDepth || 3;
+    
+    const queue: Array<{url: string, depth: number}> = [{url: this.url, depth: 0}];
+    const concurrency = 5;
+    
+    while (queue.length > 0 && this.pages.length < maxPages) {
+      const batch = queue.splice(0, concurrency);
+      const results = await Promise.allSettled(
+        batch.map(item => this.crawlPage(item.url, item.depth, maxDepth, maxPages))
+      );
+      
+      for (const result of results) {
+        if (result.status === 'fulfilled' && result.value) {
+          const links = result.value;
+          for (const link of links) {
+            const normalized = this.normalizeUrl(link.url);
+            if (!this.visited.has(normalized) && link.depth <= maxDepth && this.pages.length < maxPages) {
+              queue.push(link);
+            }
+          }
+        }
+      }
+    }
+    
     this.calculateInlinks();
     return this.pages;
   }
 
-  private async crawlPage(url: string, depth: number): Promise<void> {
-    const maxDepth = this.options.maxDepth || 3;
-    const maxPages = this.options.maxPages || 50;
-
+  private async crawlPage(url: string, depth: number, maxDepth: number, maxPages: number): Promise<Array<{url: string, depth: number}> | null> {
     if (depth > maxDepth || this.pages.length >= maxPages) {
-      return;
+      return null;
     }
 
     const normalizedUrl = this.normalizeUrl(url);
     if (this.visited.has(normalizedUrl)) {
-      return;
+      return null;
     }
 
     if (!this.shouldCrawl(normalizedUrl)) {
-      return;
+      return null;
     }
 
     this.visited.add(normalizedUrl);
 
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       
       const response = await fetch(url, {
         headers: {
@@ -55,12 +76,12 @@ export class WebCrawler {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        return;
+        return null;
       }
 
       const contentType = response.headers.get('content-type');
       if (!contentType?.includes('text/html')) {
-        return;
+        return null;
       }
 
       const html = await response.text();
@@ -68,7 +89,7 @@ export class WebCrawler {
       
       const hasNoIndex = $('meta[name="robots"]').attr('content')?.includes('noindex') || false;
       if (hasNoIndex) {
-        return;
+        return null;
       }
 
       const canonicalUrl = $('link[rel="canonical"]').attr('href') || normalizedUrl;
@@ -98,14 +119,10 @@ export class WebCrawler {
       });
 
       const links = this.extractLinks($, url);
+      return links.map(link => ({url: link, depth: depth + 1}));
       
-      for (const link of links) {
-        if (this.pages.length < maxPages) {
-          await this.crawlPage(link, depth + 1);
-        }
-      }
     } catch (error) {
-      console.error(`Erreur lors du crawl de ${url}:`, error);
+      return null;
     }
   }
 
