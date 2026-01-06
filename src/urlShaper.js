@@ -64,4 +64,3 @@ class URLShaper {
     }
 }
 exports.URLShaper = URLShaper;
-//# sourceMappingURL=urlShaper.js.map

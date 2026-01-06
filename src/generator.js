@@ -207,4 +207,3 @@ class LLMSTxtGenerator {
     }
 }
 exports.LLMSTxtGenerator = LLMSTxtGenerator;
-//# sourceMappingURL=generator.js.map

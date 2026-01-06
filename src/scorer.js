@@ -85,4 +85,3 @@ class PageScorer {
     }
 }
 exports.PageScorer = PageScorer;
-//# sourceMappingURL=scorer.js.map

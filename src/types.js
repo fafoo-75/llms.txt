@@ -17,4 +17,3 @@ var PageCategory;
     PageCategory["PRESS"] = "press";
     PageCategory["OTHER"] = "other";
 })(PageCategory || (exports.PageCategory = PageCategory = {}));
-//# sourceMappingURL=types.js.map

@@ -228,4 +228,3 @@ class WebCrawler {
     }
 }
 exports.WebCrawler = WebCrawler;
-//# sourceMappingURL=crawler.js.map
